@@ -36,4 +36,3 @@ class User(AbstractUser):
                 return mark_safe(f"<img src='{MEDIA_ROOT}{self.image_thumbnail}' width='70'>")
 
     image_tag.short_description = 'Текущий аватар'
-

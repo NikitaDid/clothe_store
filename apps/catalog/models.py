@@ -11,7 +11,7 @@ from config.settings import MEDIA_ROOT
 class Category(MPTTModel):
     name = models.CharField(verbose_name='Название', max_length=255)
     slug = models.SlugField(unique=True, verbose_name='Слаг (ЧПУ)')
-    description = models.TextField(verbose_name='Опичание', null=True, blank=True)
+    description = models.TextField(verbose_name='Опиcание', null=True, blank=True)
     image = ProcessedImageField(
         verbose_name='Изображение',
         upload_to='catalog/category/',
@@ -51,3 +51,20 @@ class Category(MPTTModel):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+
+class Product(models.Model):
+    name = models.CharField(verbose_name='Название', max_length=255)
+    slug = models.SlugField(unique=True, verbose_name='Слаг (ЧПУ)')
+    description = models.TextField(verbose_name='Опиcание', null=True, blank=True)
+    quantity = models.IntegerField(verbose_name='Количество')
+    price = models.DecimalField(verbose_name='Цена', max_digits=12, decimal_places=2, default=0)
+    updated_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
+    created_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'

@@ -31,7 +31,8 @@
             {% if request.user.is_authenticated %}
                 <p class="text-end">Hello, {{ request.user.username }} (<a href="{% url 'logout' %}"> Exit</a>)</p>
             {% else %}
-                <p class="text-end"><a href="{% url 'login' %}"> Enter </a>&nbsp;<a href="{% url 'register' %}">Register</a></p>
+                <p class="text-end"><a href="{% url 'login' %}"> Enter </a>&nbsp;<a
+                        href="{% url 'register' %}">Register</a></p>
             {% endif %}
         </div>
     </div>

@@ -22,6 +22,7 @@ def user_register(request):
     error = None
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
+
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])

@@ -20,6 +20,7 @@ class User(AbstractUser):
         source='image',
         processors=[ResizeToFill(400, 200)]
     )
+    about = models.TextField(verbose_name='About you', null=True, blank=True)
 
     def image_tag_thumbnail(self):
         if self.image:
@@ -30,9 +31,9 @@ class User(AbstractUser):
     image_tag_thumbnail.short_description = 'Текущий аватар'
 
     def image_tag(self):
-            if self.image:
-                if not self.image_thumbnail:
-                    User.objects.get(id=self.id)
-                return mark_safe(f"<img src='{MEDIA_ROOT}{self.image_thumbnail}' width='70'>")
+        if self.image:
+            if not self.image_thumbnail:
+                User.objects.get(id=self.id)
+            return mark_safe(f"<img src='{MEDIA_ROOT}{self.image_thumbnail}' width='70'>")
 
     image_tag.short_description = 'Текущий аватар'

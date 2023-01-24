@@ -26,7 +26,14 @@
         <div class="col-6">
             <img src="{% static 'img/image2.jpg' %}" alt="" id="logo">
         </div>
-        <div class="col-6"><p class="header-text">Selling clothe</p></div>
+        <div class="col-6">
+            <p class="header-text">Selling clothe</p>
+            {% if request.user.is_authenticated %}
+                <p class="text-end">Hello, {{ request.user.username }} (<a href="{% url 'logout' %}"> Exit</a>)</p>
+            {% else %}
+                <p class="text-end"><a href="{% url 'login' %}"> Enter </a>&nbsp;<a href="{% url 'register' %}">Register</a></p>
+            {% endif %}
+        </div>
     </div>
     <div class="row main-menu">
         <nav class="navbar navbar-expand-lg bg-light">

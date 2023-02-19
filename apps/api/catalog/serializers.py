@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.catalog.models import Category, Product
+from apps.catalog.models import Category, Product, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -45,3 +45,14 @@ class ProductReadSerializer(serializers.ModelSerializer):
             'price',
             'categories'
         )
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = {
+            'id',
+            'image',
+            'product',
+            'is_main'
+        }

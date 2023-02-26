@@ -1,6 +1,8 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
+from rest_framework.response import Response
+
 from apps.api.blog.serializer import ArticleWriteSerializer, ArticleReadeSerializer
-from apps.blog.models import Article
+from apps.blog.models import Article, Tag
 
 
 class ArticleViewSer(viewsets.ModelViewSet):
@@ -29,3 +31,18 @@ class ArticleViewSer(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'destroy']:
             return [permission() for permission in [permissions.IsAdminUser]]
         return [permission() for permission in [permissions.AllowAny]]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        tags = []
+        for tag_name in serializer.validated_data.get('tags'):
+            tag = Tag.objects.filter(name=tag_name).first()
+            if not tag:
+                tag = Tag.objects.create(name=tag_name)
+            tags.append(tag)
+
+            article = serializer.save(user=self.request.user, tags=tags)
+            read_serializer = self.serializer_class(article, context={'request': request})
+
+        return Response(read_serializer.data, status=status.HTTP_201_CREATED)
